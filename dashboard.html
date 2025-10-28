@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/check-auth.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h2>Expense Tracker</h2>
+            <ul class="nav-links">
+                <li><a href="index.html"><button>Transactions</button></a></li>
+                <li><a href="dashboard.html" class="active"><button>Dashboard</button></a></li>
+                <li><a href="about.html"><button>About</button></a></li>
+                <li><button onclick="logout()" class="logout-btn">Logout</button></li>
+            </ul>
+        </div>
+        <div class="user-info">Welcome, <span id="username"></span></div>
+    </nav>
+
+    <div class="container dashboard">
+        <div class="dashboard-grid">
+            <div class="card overview-card">
+                <h3>Monthly Overview</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <p class="stat-label">This Month's Income</p>
+                        <p class="stat-value" id="monthly-income">$0.00</p>
+                    </div>
+                    <div class="stat-item">
+                        <p class="stat-label">This Month's Expenses</p>
+                        <p class="stat-value" id="monthly-expenses">$0.00</p>
+                    </div>
+                    <div class="stat-item">
+                        <p class="stat-label">Monthly Savings</p>
+                        <p class="stat-value" id="monthly-savings">$0.00</p>
+                    </div>
+                    <div class="stat-item">
+                        <p class="stat-label">Expense Rate</p>
+                        <p class="stat-value" id="expense-rate">0%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Expense Categories</h3>
+                <canvas id="expense-categories-chart"></canvas>
+            </div>
+
+            <div class="card">
+                <h3>Income vs Expenses</h3>
+                <canvas id="income-expense-chart"></canvas>
+            </div>
+
+            <div class="card">
+                <h3>Recent Transactions</h3>
+                <div class="recent-transactions" id="recent-transactions">
+                    <!-- Recent transactions will be added here -->
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Monthly Trend</h3>
+                <canvas id="monthly-trend-chart"></canvas>
+            </div>
+
+            <div class="card budget-card">
+                <h3>Budget Overview</h3>
+                <div class="budget-form">
+                    <input type="number" id="budget-amount" placeholder="Set monthly budget">
+                    <button id="set-budget-btn" class="btn">Set Budget</button>
+                </div>
+                <div class="budget-progress">
+                    <div class="progress-bar">
+                        <div class="progress" id="budget-progress"></div>
+                    </div>
+                    <p class="budget-text">Budget used: <span id="budget-percentage">0%</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/dashboard.js"></script>
+    <script>document.getElementById('username').textContent = sessionStorage.getItem('currentUser');</script>
+</body>
+</html>

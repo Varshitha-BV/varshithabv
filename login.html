@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Expense Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <script>
+        // Check if user is already logged in
+        if (sessionStorage.getItem('currentUser')) {
+            window.location.href = 'index.html';
+        }
+    </script>
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-box" id="loginBox">
+            <h2>Welcome Back!</h2>
+            <p class="auth-subtitle">Track your expenses with ease</p>
+            
+            <form id="loginForm" class="auth-form">
+                <div class="form-control">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" id="loginUsername" required placeholder="Enter your username">
+                </div>
+                <div class="form-control">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="btn auth-btn">Login</button>
+            </form>
+            
+            <p class="auth-switch">
+                Don't have an account? 
+                <a href="#" id="showSignup">Sign up</a>
+            </p>
+        </div>
+
+        <div class="auth-box hidden" id="signupBox">
+            <h2>Create Account</h2>
+            <p class="auth-subtitle">Start tracking your finances</p>
+            
+            <form id="signupForm" class="auth-form">
+                <div class="form-control">
+                    <label for="signupUsername">Username</label>
+                    <input type="text" id="signupUsername" required placeholder="Choose a username">
+                </div>
+                <div class="form-control">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required placeholder="Choose a password">
+                </div>
+                <div class="form-control">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" required placeholder="Confirm your password">
+                </div>
+                <button type="submit" class="btn auth-btn">Sign Up</button>
+            </form>
+            
+            <p class="auth-switch">
+                Already have an account? 
+                <a href="#" id="showLogin">Login</a>
+            </p>
+        </div>
+    </div>
+    <script src="js/auth.js"></script>
+</body>
+</html>
