@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/summary.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/check-auth.js"></script>
 </head>
@@ -57,12 +62,7 @@
                 <canvas id="income-expense-chart"></canvas>
             </div>
 
-            <div class="card">
-                <h3>Recent Transactions</h3>
-                <div class="recent-transactions" id="recent-transactions">
-                    <!-- Recent transactions will be added here -->
-                </div>
-            </div>
+
 
             <div class="card">
                 <h3>Monthly Trend</h3>

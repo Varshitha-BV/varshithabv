@@ -6,6 +6,7 @@
     <title>Login - Expense Tracker</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/animations.css">
     <script>
         // Check if user is already logged in
         if (sessionStorage.getItem('currentUser')) {
@@ -14,6 +15,7 @@
     </script>
 </head>
 <body class="auth-body">
+    <div class="particles" id="particles"></div>
     <div class="auth-container">
         <div class="auth-box" id="loginBox">
             <h2>Welcome Back!</h2>
@@ -63,6 +65,7 @@
             </p>
         </div>
     </div>
+    <script src="js/particles.js"></script>
     <script src="js/auth.js"></script>
 </body>
 </html>

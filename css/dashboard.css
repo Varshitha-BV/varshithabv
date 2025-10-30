@@ -49,10 +49,24 @@
 }
 
 .card {
-    background: white;
+    background: rgba(255, 255, 255, 0.1);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card h3 {
+    text-align: center;
+    margin: 0 auto 20px;
+    color: #ffffff;
+    position: relative;
+    padding-bottom: 15px;
+    display: inline-block;
+    font-size: 1.5em;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
 .card canvas {
@@ -89,22 +103,6 @@
     font-weight: bold;
     color: #2c3e50;
     margin: 0;
-}
-
-.recent-transactions {
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.transaction-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-}
-
-.transaction-item:last-child {
-    border-bottom: none;
 }
 
 .budget-card {

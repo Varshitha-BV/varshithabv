@@ -3,7 +3,7 @@ const monthlyIncomeEl = document.getElementById('monthly-income');
 const monthlyExpensesEl = document.getElementById('monthly-expenses');
 const monthlySavingsEl = document.getElementById('monthly-savings');
 const expenseRateEl = document.getElementById('expense-rate');
-const recentTransactionsEl = document.getElementById('recent-transactions');
+
 const budgetAmountEl = document.getElementById('budget-amount');
 const setBudgetBtn = document.getElementById('set-budget-btn');
 const budgetProgressEl = document.getElementById('budget-progress');
@@ -20,7 +20,6 @@ let monthlyTrendChart = null;
 // Initialize dashboard
 function initDashboard() {
     updateMonthlyStats();
-    updateRecentTransactions();
     updateCharts();
     updateBudgetProgress();
 }
@@ -54,26 +53,7 @@ function updateMonthlyStats() {
     expenseRateEl.textContent = `${expenseRate}%`;
 }
 
-// Update recent transactions
-function updateRecentTransactions() {
-    recentTransactionsEl.innerHTML = '';
-    const recentTransactions = [...transactions]
-        .reverse()
-        .slice(0, 5);
 
-    recentTransactions.forEach(transaction => {
-        const div = document.createElement('div');
-        div.className = 'transaction-item';
-        const sign = transaction.amount < 0 ? '-' : '+';
-        div.innerHTML = `
-            <span>${transaction.description}</span>
-            <span class="${transaction.amount < 0 ? 'expense' : 'income'}">
-                ${sign}$${Math.abs(transaction.amount).toFixed(2)}
-            </span>
-        `;
-        recentTransactionsEl.appendChild(div);
-    });
-}
 
 // Update all charts
 function updateCharts() {

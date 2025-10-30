@@ -40,7 +40,7 @@ function addTransactionToDOM(transaction) {
         </div>
         <span class="category-tag">${transaction.category}</span>
         <span class="amount ${transaction.amount < 0 ? 'expense' : 'income'}">
-            ${sign}$${Math.abs(transaction.amount).toFixed(2)}
+            ${sign}₹${Math.abs(transaction.amount).toFixed(2)}
         </span>
         <button class="delete-btn" onclick="removeTransaction(${transaction.id})">×</button>
     `;
@@ -68,9 +68,9 @@ function updateValues() {
         .toFixed(2);
 
     // Update DOM
-    balanceEl.textContent = `$${total}`;
-    incomeAmountEl.textContent = `$${income}`;
-    expenseAmountEl.textContent = `$${expense}`;
+    balanceEl.textContent = `₹${total}`;
+    incomeAmountEl.textContent = `₹${income}`;
+    expenseAmountEl.textContent = `₹${expense}`;
 }
 
 // Remove transaction by ID

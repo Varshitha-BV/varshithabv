@@ -1,0 +1,205 @@
+/* Transaction History Controls */
+.list-controls {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(176, 196, 222, 0.15);
+    animation: fadeIn 0.5s ease-out;
+}
+
+.filter-controls, .sort-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.control-btn {
+    padding: 10px 20px;
+    border: 2px solid rgba(173, 216, 230, 0.3);
+    border-radius: 12px;
+    background: white;
+    color: #2c3e50;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.control-btn:hover {
+    background: linear-gradient(135deg, #b0c4de, #add8e6);
+    color: white;
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(173, 216, 230, 0.3);
+}
+
+.control-btn.active {
+    background: linear-gradient(135deg, #b0c4de, #add8e6);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 5px 15px rgba(173, 216, 230, 0.3);
+}
+
+/* Transaction List Items */
+.list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: slideIn 0.5s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.list li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.05),
+        transparent
+    );
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+}
+
+.list li:hover::before {
+    transform: translateX(100%);
+}
+
+.list li:hover {
+    transform: translateX(10px) translateY(-2px);
+    box-shadow: 0 8px 25px rgba(176, 196, 222, 0.25);
+}
+
+.transaction-info {
+    flex-grow: 1;
+    padding: 0 20px;
+}
+
+.transaction-info .description {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.transaction-info .details {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.amount {
+    font-weight: 700;
+    font-size: 1.2em;
+    padding: 8px 15px;
+    border-radius: 10px;
+    min-width: 120px;
+    text-align: right;
+}
+
+.income .amount {
+    color: #27ae60;
+    background: rgba(39, 174, 96, 0.1);
+}
+
+.expense .amount {
+    color: #c0392b;
+    background: rgba(192, 57, 43, 0.1);
+}
+
+/* Delete Button Styling */
+.delete-btn {
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.list li:hover .delete-btn {
+    opacity: 1;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Sort Icons Animation */
+.sort-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.sort-icon.asc {
+    transform: rotate(180deg);
+}
+
+/* Empty State Animation */
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Custom Scrollbar */
+.list {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: rgba(173, 216, 230, 0.1);
+    border-radius: 4px;
+}
+
+.list::-webkit-scrollbar-thumb {
+    background: rgba(173, 216, 230, 0.5);
+    border-radius: 4px;
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+    background: rgba(173, 216, 230, 0.7);
+}
