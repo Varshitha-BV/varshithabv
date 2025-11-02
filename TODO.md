@@ -1,0 +1,4 @@
+- [ ] Change --text from #FFFFFF to #333333 in css/style.css
+- [ ] Change --background from #1E1B4B to #FFFFFF in css/style.css
+- [ ] Adjust --surface and other colors for light theme compatibility
+- [ ] Test the index.html page to ensure text is now dark on light background

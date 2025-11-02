@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/summary.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/check-auth.js"></script>
+    <script src="js/audio-utils.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -28,6 +29,7 @@
         <div class="user-info">Welcome, <span id="username"></span></div>
     </nav>
 
+    <div id="notification" class="notification" style="display: none;"></div>
     <div class="container dashboard">
         <div class="dashboard-grid">
             <div class="card overview-card">
@@ -52,10 +54,14 @@
                 </div>
             </div>
 
-            <div class="card">
-                <h3>Expense Categories</h3>
-                <canvas id="expense-categories-chart"></canvas>
+            <div class="card totals-card">
+                <h3>Totals Overview</h3>
+                <div class="totals-chart-wrapper" style="height:240px;">
+                    <canvas id="totals-chart"></canvas>
+                </div>
             </div>
+
+            <!-- Expense Categories removed per request -->
 
             <div class="card">
                 <h3>Income vs Expenses</h3>
@@ -72,14 +78,27 @@
             <div class="card budget-card">
                 <h3>Budget Overview</h3>
                 <div class="budget-form">
-                    <input type="number" id="budget-amount" placeholder="Set monthly budget">
-                    <button id="set-budget-btn" class="btn">Set Budget</button>
+                    <input type="number" id="budget-amount" placeholder="Set monthly budget" disabled>
+                    <div class="budget-actions">
+                        <button id="edit-budget-btn" class="btn">Edit</button>
+                        <button id="set-budget-btn" class="btn primary">Save</button>
+                        <button id="reset-budget-btn" class="btn danger">Reset</button>
+                    </div>
                 </div>
                 <div class="budget-progress">
                     <div class="progress-bar">
                         <div class="progress" id="budget-progress"></div>
                     </div>
                     <p class="budget-text">Budget used: <span id="budget-percentage">0%</span></p>
+                    <div class="budget-numbers">
+                        <p>Budget: ₹<span id="budget-total">0.00</span></p>
+                        <p>Used: ₹<span id="budget-used">0.00</span></p>
+                        <p>Remaining: ₹<span id="budget-remaining">0.00</span></p>
+                    </div>
+                    <!-- Presets removed -->
+                    <div class="budget-sparkline" style="height:80px; margin-top:10px;">
+                        <canvas id="budget-sparkline"></canvas>
+                    </div>
                 </div>
             </div>
         </div>

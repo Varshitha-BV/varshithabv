@@ -1,15 +1,78 @@
-/* Enhanced Balance and Summary Styles */
-.balance-container {
+/* Horizontal Stats Bar */
+.stats-row {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 2px;
+    margin: 20px 0;
+    width: 100%;
+    background: rgba(124, 58, 237, 0.05);
+    padding: 2px;
+    border-radius: 8px;
+}
+
+.stat-card {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 15px 20px;
     text-align: center;
-    margin: 20px auto 40px;
-    padding: 40px;
+    transition: background-color 0.3s ease;
+}
+
+.stat-card:hover {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 25px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    position: relative;
-    overflow: hidden;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.stat-info h2 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.stat-info h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.total-balance .stat-info h3 {
+    color: #7C3AED;
+}
+
+.total-income .stat-info h3 {
+    color: #059669;
+}
+
+.total-expense .stat-info h3 {
+    color: #DC2626;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+    .stats-row {
+        padding: 2px;
+        gap: 1px;
+    }
+
+    .stat-card {
+        padding: 10px;
+    }
+
+    .stat-info h2 {
+        font-size: 0.8rem;
+    }
+
+    .stat-info h3 {
+        font-size: 1.2rem;
+    }
 }
 
 .balance-container::before {

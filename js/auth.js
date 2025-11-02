@@ -46,6 +46,8 @@ loginForm.addEventListener('submit', (e) => {
 signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const username = document.getElementById('signupUsername').value.trim();
+    const displayName = document.getElementById('displayName') ? document.getElementById('displayName').value.trim() : '';
+    const email = document.getElementById('email') ? document.getElementById('email').value.trim() : '';
     const password = document.getElementById('signupPassword').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
 
@@ -66,10 +68,12 @@ signupForm.addEventListener('submit', (e) => {
         return;
     }
 
-    // Create new user
+    // Create new user with optional profile fields
     users[username] = {
         password: password,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        displayName: displayName || username,
+        email: email || ''
     };
 
     // Save to localStorage

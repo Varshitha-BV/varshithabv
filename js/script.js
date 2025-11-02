@@ -3,13 +3,17 @@ const balanceEl = document.getElementById('balance');
 const incomeAmountEl = document.getElementById('income-amount');
 const expenseAmountEl = document.getElementById('expense-amount');
 const transactionFormEl = document.getElementById('transaction-form');
-const descriptionEl = document.getElementById('description');
 const amountEl = document.getElementById('amount');
 const transactionTypeEl = document.getElementById('transaction-type');
 const categoryEl = document.getElementById('category');
 const dateEl = document.getElementById('date');
 const notesEl = document.getElementById('notes');
 const transactionListEl = document.getElementById('transaction-list');
+
+// Initialize transactions array if it doesn't exist
+if (!localStorage.getItem('transactions')) {
+    localStorage.setItem('transactions', JSON.stringify([]));
+}
 
 // Set default date to today
 dateEl.valueAsDate = new Date();
@@ -50,27 +54,33 @@ function addTransactionToDOM(transaction) {
 
 // Update balance, income and expense
 function updateValues() {
-    const amounts = transactions.map(transaction => transaction.amount);
-    
-    // Calculate balance
-    const total = amounts.reduce((acc, item) => (acc + item), 0).toFixed(2);
-    
-    // Calculate income
-    const income = amounts
-        .filter(item => item > 0)
-        .reduce((acc, item) => (acc + item), 0)
-        .toFixed(2);
+    try {
+        const amounts = transactions.map(transaction => parseFloat(transaction.amount));
+        
+        // Calculate balance
+        const total = amounts.reduce((acc, item) => acc + item, 0);
+        
+        // Calculate income (sum of positive amounts)
+        const income = amounts
+            .filter(item => item > 0)
+            .reduce((acc, item) => acc + item, 0);
 
-    // Calculate expenses
-    const expense = (amounts
-        .filter(item => item < 0)
-        .reduce((acc, item) => (acc + item), 0) * -1)
-        .toFixed(2);
+        // Calculate expenses (sum of negative amounts)
+        const expense = Math.abs(amounts
+            .filter(item => item < 0)
+            .reduce((acc, item) => acc + item, 0));
 
-    // Update DOM
-    balanceEl.textContent = `₹${total}`;
-    incomeAmountEl.textContent = `₹${income}`;
-    expenseAmountEl.textContent = `₹${expense}`;
+        // Update DOM with formatted numbers
+        balanceEl.textContent = `₹${total.toFixed(2)}`;
+        incomeAmountEl.textContent = `₹${income.toFixed(2)}`;
+        expenseAmountEl.textContent = `₹${expense.toFixed(2)}`;
+    } catch (error) {
+        console.error('Error updating values:', error);
+        // Set default values if there's an error
+        balanceEl.textContent = '₹0.00';
+        incomeAmountEl.textContent = '₹0.00';
+        expenseAmountEl.textContent = '₹0.00';
+    }
 }
 
 // Remove transaction by ID
@@ -89,24 +99,29 @@ function updateLocalStorage() {
 function addTransaction(e) {
     e.preventDefault();
 
-    const description = descriptionEl.value.trim();
     const amount = parseFloat(amountEl.value);
     const isExpense = transactionTypeEl.value === 'expense';
     const category = categoryEl.value;
     const date = dateEl.value;
     const notes = notesEl.value.trim();
 
-    if (description === '' || isNaN(amount) || category === '') {
-        alert('Please fill in all required fields');
+    // Validation
+    if (isNaN(amount) || amount <= 0) {
+        alert('Please enter a valid amount');
+        return;
+    }
+
+    if (category === '') {
+        alert('Please select a category');
         return;
     }
 
     const transaction = {
         id: generateID(),
-        description,
+        description: category,
         amount: isExpense ? -Math.abs(amount) : Math.abs(amount),
         category,
-        date,
+        date: date || new Date().toISOString().split('T')[0],
         notes
     };
 
@@ -139,21 +154,27 @@ let currentSort = {
 function filterTransactions() {
     const typeFilter = filterTypeEl.value;
     const categoryFilter = filterCategoryEl.value;
-    
+
     let filteredTransactions = [...transactions];
 
-    // Apply type filter
-    if (typeFilter !== 'all') {
-        filteredTransactions = filteredTransactions.filter(t => 
-            typeFilter === 'income' ? t.amount > 0 : t.amount < 0
-        );
-    }
-
-    // Apply category filter
-    if (categoryFilter !== 'all') {
-        filteredTransactions = filteredTransactions.filter(t => 
-            t.category === categoryFilter
-        );
+    if (categoryFilter === 'all') {
+        // Show all transactions when "All Categories" is selected, ignore type filter
+        filteredTransactions = [...transactions];
+    } else if (categoryFilter === 'all-expenses') {
+        // Show all expenses, ignore type filter
+        filteredTransactions = transactions.filter(t => t.amount < 0);
+    } else if (categoryFilter === 'all-income') {
+        // Show all income, ignore type filter
+        filteredTransactions = transactions.filter(t => t.amount > 0);
+    } else {
+        // Specific category selected
+        filteredTransactions = transactions.filter(t => t.category === categoryFilter);
+        // Apply type filter if not 'all'
+        if (typeFilter !== 'all') {
+            filteredTransactions = filteredTransactions.filter(t =>
+                typeFilter === 'income' ? t.amount > 0 : t.amount < 0
+            );
+        }
     }
 
     // Apply current sort
@@ -200,13 +221,42 @@ function handleSort(field) {
     filterTransactions();
 }
 
-// Event listeners
-transactionFormEl.addEventListener('submit', addTransaction);
-transactionTypeEl.addEventListener('change', updateCategoryOptions);
-filterTypeEl.addEventListener('change', filterTransactions);
-filterCategoryEl.addEventListener('change', filterTransactions);
-sortDateEl.addEventListener('click', () => handleSort('date'));
-sortAmountEl.addEventListener('click', () => handleSort('amount'));
+// Event listeners (guarded when optional elements are absent)
+if (transactionFormEl) transactionFormEl.addEventListener('submit', addTransaction);
+if (transactionTypeEl) transactionTypeEl.addEventListener('change', updateCategoryOptions);
+if (filterTypeEl) filterTypeEl.addEventListener('change', filterTransactions);
+if (filterCategoryEl) filterCategoryEl.addEventListener('change', filterTransactions);
+if (sortDateEl) sortDateEl.addEventListener('click', () => handleSort('date'));
+if (sortAmountEl) sortAmountEl.addEventListener('click', () => handleSort('amount'));
+
+// Clear all transactions button (if present)
+const clearBtn = document.getElementById('clear-btn');
+if (clearBtn) clearBtn.addEventListener('click', clearAllTransactions);
+
+function clearAllTransactions() {
+    if (!confirm('Are you sure you want to delete ALL transactions? This cannot be undone.')) return;
+    transactions = [];
+    updateLocalStorage();
+    init();
+}
+
+// Function to update category options based on transaction type
+function updateCategoryOptions() {
+    const transactionType = transactionTypeEl.value;
+    const expenseOptions = categoryEl.querySelectorAll('optgroup[label="Expenses"] option');
+    const incomeOptions = categoryEl.querySelectorAll('optgroup[label="Income"] option');
+    
+    expenseOptions.forEach(option => {
+        option.style.display = transactionType === 'expense' ? '' : 'none';
+    });
+    
+    incomeOptions.forEach(option => {
+        option.style.display = transactionType === 'income' ? '' : 'none';
+    });
+    
+    // Reset category selection
+    categoryEl.value = '';
+}
 
 // Initialize app
 init();

@@ -29,33 +29,37 @@
     <div class="container">
         <h1>Personal Expense Tracker</h1>
         
-        <div class="balance-container">
-            <h2>Your Balance</h2>
-            <h3 id="balance">₹0.00</h3>
-        </div>
-
-        <div class="summary">
-            <div class="income">
-                <h4>Income</h4>
-                <p id="income-amount">₹0.00</p>
+        <div class="stats-row">
+            <div class="stat-card total-balance">
+                <div class="stat-info">
+                    <h2>Total Balance</h2>
+                    <h3 id="balance">₹0.00</h3>
+                </div>
             </div>
-            <div class="expenses">
-                <h4>Expenses</h4>
-                <p id="expense-amount">₹0.00</p>
+            
+            <div class="stat-card total-income">
+                <div class="stat-info">
+                    <h2>Total Income</h2>
+                    <h3 id="income-amount">₹0.00</h3>
+                </div>
+            </div>
+            
+            <div class="stat-card total-expense">
+                <div class="stat-info">
+                    <h2>Total Expense</h2>
+                    <h3 id="expense-amount">₹0.00</h3>
+                </div>
             </div>
         </div>
 
         <div class="transaction-container">
             <h3>Add New Transaction</h3>
             <form id="transaction-form">
-                <div class="form-control">
-                    <label for="description">Description</label>
-                    <input type="text" id="description" placeholder="Enter description..." required>
-                </div>
+
                 <div class="form-row">
                     <div class="form-control">
                         <label for="amount">Amount</label>
-                        <input type="number" id="amount" placeholder="Enter amount..." required step="0.01">
+                        <input type="number" id="amount" placeholder="Enter amount" required step="0.01">
                     </div>
                     <div class="form-control">
                         <label for="transaction-type">Type</label>
@@ -101,53 +105,26 @@
             </form>
         </div>
 
-        <div class="history-container">
-            <div class="history-header">
+        <!-- Transaction List -->
+        <div class="transaction-list-container">
+            <div class="transaction-list-header">
                 <h3>Transaction History</h3>
-                <div class="list-controls">
-                    <div class="filter-controls">
-                        <select id="filter-type" class="control-btn">
-                            <option value="all">All Types</option>
-                            <option value="income">Income</option>
-                            <option value="expense">Expense</option>
-                        </select>
-                        <select id="filter-category" class="control-btn">
-                            <option value="all">All Categories</option>
-                            <optgroup label="Expenses">
-                                <option value="groceries">Groceries</option>
-                                <option value="utilities">Utilities</option>
-                                <option value="rent">Rent</option>
-                                <option value="transportation">Transportation</option>
-                                <option value="entertainment">Entertainment</option>
-                                <option value="healthcare">Healthcare</option>
-                                <option value="shopping">Shopping</option>
-                                <option value="other-expense">Other</option>
-                            </optgroup>
-                            <optgroup label="Income">
-                                <option value="salary">Salary</option>
-                                <option value="freelance">Freelance</option>
-                                <option value="investments">Investments</option>
-                                <option value="other-income">Other</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    <div class="sort-controls">
-                        <button id="sort-date" class="control-btn">
-                            Sort by Date <span class="sort-icon">↓</span>
-                        </button>
-                        <button id="sort-amount" class="control-btn">
-                            Sort by Amount <span class="sort-icon">↓</span>
-                        </button>
-                    </div>
-                </div>
+                <button id="clear-btn" class="btn clear-btn" type="button">Clear All</button>
             </div>
-            <ul id="transaction-list" class="list">
-                <!-- Transactions will be added here dynamically -->
-            </ul>
+            <ul id="transaction-list" class="list"></ul>
         </div>
     </div>
     <script src="js/check-auth.js"></script>
-    <script>document.getElementById('username').textContent = currentUser;</script>
+    <script>
+        try {
+            const uname = currentUser;
+            const users = JSON.parse(localStorage.getItem('users')) || {};
+            const display = users[uname] && users[uname].displayName ? users[uname].displayName : uname;
+            document.getElementById('username').textContent = display;
+        } catch (err) {
+            document.getElementById('username').textContent = currentUser;
+        }
+    </script>
     <script src="js/script.js"></script>
 </body>
 </html>

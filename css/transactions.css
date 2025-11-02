@@ -55,7 +55,7 @@
     animation: slideIn 0.5s ease-out;
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    color: #fff;
+    color: #333333;
     position: relative;
     overflow: hidden;
 }
@@ -94,12 +94,12 @@
 .transaction-info .description {
     font-size: 1.1em;
     font-weight: 600;
-    color: #2c3e50;
+    color: #333333;
     margin-bottom: 5px;
 }
 
 .transaction-info .details {
-    color: #666;
+    color: #333333;
     font-size: 0.9em;
 }
 
